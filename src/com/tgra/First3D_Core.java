@@ -145,7 +145,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		cam.setModelViewMatrix();
 				
 		// Configure light 0
-		float[] lightDiffuse = {2.0f, 1.0f, 1.0f, 1.0f};
+		float[] lightDiffuse = {1.0f, 1.0f, 1.0f, 1.0f};
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse, 0);
 
 		float[] lightPosition = {this.wiggleValue, 10.0f, 15.0f, 1.0f};
