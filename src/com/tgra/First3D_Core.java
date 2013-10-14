@@ -19,7 +19,21 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 	@Override
 	public void create() {
-		
+		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
+		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
+		Gdx.gl11.glLoadIdentity();
+		Gdx.glu.gluLookAt(Gdx.gl11,8.0f, 5.0f, 7.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		Gdx.gl11.glGetFloatv(GL11.GL_MODELVIEW_MATRIX, mvm);
+		float[] s = new float[16];
+		mvm.get(s);
+		int i = 0;
+		for(float f : s) {
+			if(i % 4 == 0)
+				System.out.println();
+			System.out.print(f + "\t");
+			i++;
+		}
+
 		Gdx.input.setInputProcessor(this);
 		
 		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
