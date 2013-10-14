@@ -65,7 +65,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		cam = new Camera(new Point3D(0.0f, 3.0f, 2.0f), new Point3D(2.0f, 3.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		cam = new Camera(new Point3D(0.0f, 3.0f, 2.0f), new Point3D(5.0f, 3.0f, 2.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
 
 	@Override
