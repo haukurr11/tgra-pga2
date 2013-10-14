@@ -13,8 +13,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 {
 	Camera cam;
 	private boolean ligthBulbState = true;
-	private boolean wiggleLights = false;
-	private float wiggleValue = 0f;
+	private boolean wiggleLights = true;
+	private float wiggleValue = 1f;
 	private float count = 0;
 		
 	@Override
@@ -23,17 +23,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
 		Gdx.gl11.glLoadIdentity();
 		Gdx.glu.gluLookAt(Gdx.gl11,8.0f, 5.0f, 7.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		Gdx.gl11.glGetFloatv(GL11.GL_MODELVIEW_MATRIX, mvm);
-		float[] s = new float[16];
-		mvm.get(s);
-		int i = 0;
-		for(float f : s) {
-			if(i % 4 == 0)
-				System.out.println();
-			System.out.print(f + "\t");
-			i++;
-		}
-
 		Gdx.input.setInputProcessor(this);
 		
 		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
@@ -45,27 +34,20 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glMatrixMode(GL11.GL_PROJECTION);
 		Gdx.gl11.glLoadIdentity();
-		Gdx.glu.gluPerspective(Gdx.gl11, 90, 1.333333f, 1.0f, 100.0f);
+		Gdx.glu.gluPerspective(Gdx.gl11, 90, 1.333333f, 1.0f, 10000.0f);
 
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
 		FloatBuffer vertexBuffer = BufferUtils.newFloatBuffer(72);
-		vertexBuffer.put(new float[] {-0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
-									  -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, 0.5f,
-									  0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-									  -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,
-									  0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f});
+		vertexBuffer.put(new float[] {
+				-100.5f, -0.5f, -100.5f, 
+				-100.5f, -0.5f, 100.5f,
+				100.5f, -0.5f, -100.5f, 
+				100.5f, -0.5f, 100.5f});
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		cam = new Camera(new Point3D(0.0f, 3.0f, 2.0f), new Point3D(5.0f, 3.0f, 2.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		cam = new Camera(new Point3D(0.0f, 2.5f, 0.0f), new Point3D(3.0f, 2.5f, 10.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
 
 	@Override
@@ -95,12 +77,12 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			Gdx.gl11.glDisable(GL11.GL_LIGHT0);
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
-
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-			cam.pitch(-90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-			cam.pitch(90.0f * deltaTime);
+//
+//		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
+//			cam.pitch(-90.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
+//			cam.pitch(90.0f * deltaTime);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			cam.yaw(-90.0f * deltaTime);
@@ -177,7 +159,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 
 		// Draw floor!
-		drawFloor(50);
+		drawFloor(1);
 	}
 
 	@Override
@@ -245,7 +227,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 	@Override
 	public boolean touchMoved(int arg0, int arg1) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
