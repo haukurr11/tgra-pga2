@@ -44,10 +44,10 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		FloatBuffer vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {
-				-100.5f, -0.5f, -100.5f, 
-				-100.5f, -0.5f, 100.5f,
-				100.5f, -0.5f, -100.5f, 
-				100.5f, -0.5f, 100.5f});
+				-100f, 0f, -100f, 
+				-100f, 0f, 100f,
+				100f, 0f, -100f, 
+				100f, 0f, 100f});
 		vertexBuffer.put(new float[] {
 				0f, 0, 0f,  
 				0f, 4f,0f,
