@@ -18,6 +18,19 @@ public class Wall {
 			this.column = temp;
 		}
 	}
+	public int getColumn() {
+		if(this.front)
+			return row;
+		return column;
+	}
+	public int getRow() {
+		if(this.front)
+			return column;
+		return row;
+	}
+	public boolean isFront() {
+		return front;
+	}
 	public int rowcol(float z) {
 		return (int)(((z + 100)/200)*20);
 	}

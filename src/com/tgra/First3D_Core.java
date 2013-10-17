@@ -114,11 +114,18 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			cam.slide(0.0f, -this.speed * deltaTime, 0.0f);
 		this.mazebase.preventCollision(this.cam);
 		for(Wall wall: this.walls)
-		   wall.preventCollision(this.cam);
-		
+		{
+			if(Math.abs(rowcol(this.cam.eye.z)-wall.getColumn()) <=1
+			  && Math.abs(rowcol(this.cam.eye.x)-wall.getRow()) <=1) {
+		       wall.preventCollision(this.cam);
+			}
+		}
 
 	}
-	
+
+	public int rowcol(float z) {
+		return (int)(((z + 100)/200)*20);
+	}
 	private void display() {
 		Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 		cam.setModelViewMatrix();	
