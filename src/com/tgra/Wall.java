@@ -17,7 +17,8 @@ public class Wall {
 		return (int)(((z + 100)/200)*20);
 	}
 	public void preventCollision(Camera camera) {
-		
+		if(camera.eye.y < 0 || camera.eye.y > 10)
+			return;
 		int camera_col = rowcol(camera.eye.z);
 		int camera_row = rowcol(camera.eye.x);
 
@@ -27,7 +28,7 @@ public class Wall {
 		int highZLimit = lowZLimit + 10;
 		int XLimit = -100 + (this.column+1)*10;
 
-			if( (Math.ceil(camera.eye.x) == XLimit+1 || Math.ceil(camera.eye.x) == XLimit-1)
+			if( (Math.ceil(camera.eye.x) == XLimit+1 || Math.ceil(camera.eye.x) == XLimit-1 || Math.ceil(camera.eye.x) == XLimit)
 					&& Math.ceil(camera.eye.z) <= highZLimit 
 					&& Math.ceil(camera.eye.z) >= lowZLimit) {
 			   if(camera_row == this.column)
@@ -41,7 +42,7 @@ public class Wall {
 			int highXLimit = lowXLimit +10;
 			int ZLimit = -100 + ((this.column)*10) + 10;
 			System.out.println(ZLimit + " " + camera.eye.z);
-			if( (Math.ceil(camera.eye.z) == ZLimit+1 || Math.ceil(camera.eye.z) == ZLimit-1)
+			if( (Math.ceil(camera.eye.z) == ZLimit+1 || Math.ceil(camera.eye.z) == ZLimit-1|| Math.ceil(camera.eye.z) == ZLimit)
 					&& Math.ceil(camera.eye.x)<= highXLimit 
 					&& Math.ceil(camera.eye.x) >= lowXLimit) {
 			   if(camera_col == this.column)
