@@ -56,7 +56,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-		cam = new Camera(new Point3D(80.0f, 2.5f, 90.0f), new Point3D(3.0f, 2.5f, 10.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		cam = new Camera(new Point3D(-95.0f, 2.5f, -95.0f), new Point3D(3.0f, 2.5f, 10.0f), new Vector3D(0.0f, 1.0f, 0.0f));
 	}
 
 	@Override
@@ -112,10 +112,14 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition, 0);
 		this.mazebase.display();
 		Wall wall = new Wall();
-		wall.display();
-		Gdx.gl11.glRotatef(90, 0,1, 0);
 		
-		wall.display();
+		for(int i=0;i<20;i++) {
+		 for(int j=0;j<20;j++) {
+		 wall.display(i,j,false);
+		 wall.display(i,j,true);
+		 }
+		}
+		
 	}
 
 	@Override

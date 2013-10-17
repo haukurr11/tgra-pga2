@@ -9,13 +9,26 @@ public class Wall {
 	float z;
 	public Wall() {
 	}
-	public void display() {
+	public void display(int row, int column,boolean across) {
+		if(across) {
+			row = 19-row;
+		}
 		Gdx.gl11.glPushMatrix();
+
+		  row = -100+10*(row);
+		  column = -100+10*(column+1);
+			if(across) {
+				  Gdx.gl11.glRotatef(90, 0,1, 0);
+				}
 
 		int j = 0;
 
-		for(int k=-90;k<100;k+=10) {
+		for(int k=-100;k<100;k+=10) {
+			if(k != column)
+				continue;
 		for(int i=-100;i<100;i+=10) {
+			if(i != row)
+				continue;
 		Gdx.gl11.glPushMatrix();
 
 		Gdx.gl11.glTranslatef(i,0f,k);

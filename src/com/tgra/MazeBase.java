@@ -46,13 +46,13 @@ public class MazeBase {
        this.drawWalls();
 	}
 	public void preventCollision(Camera camera) {
-		if(camera.eye.z <= this.z-100+2)
-		   camera.eye.z = (float) (Math.round(camera.eye.z)+0.5);
-		if(camera.eye.z >= this.z+100-2)
-			camera.eye.z = (float) (Math.round(camera.eye.z)-0.5);
-		if(camera.eye.x <= this.x-100+2)
-			   camera.eye.x = (float) (Math.round(camera.eye.x)+0.5);
-		if(camera.eye.x >= this.x+100-2)
-			camera.eye.x = (float) (Math.round(camera.eye.x)-0.5);
+//		if(camera.eye.z <= this.z-100+2)
+//		   camera.eye.z = (float) (Math.round(camera.eye.z)+0.5);
+//		if(camera.eye.z >= this.z+100-2)
+//			camera.eye.z = (float) (Math.round(camera.eye.z)-0.5);
+//		if(camera.eye.x <= this.x-100+2)
+//			   camera.eye.x = (float) (Math.round(camera.eye.x)+0.5);
+//		if(camera.eye.x >= this.x+100-2)
+//			camera.eye.x = (float) (Math.round(camera.eye.x)-0.5);
 	}
 }
