@@ -113,6 +113,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		this.mazebase.display();
 		Wall wall = new Wall();
 		wall.display();
+		Gdx.gl11.glRotatef(90, 0,1, 0);
+		
+		wall.display();
 	}
 
 	@Override
