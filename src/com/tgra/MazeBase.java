@@ -16,13 +16,17 @@ public class MazeBase {
 		this.z = z;
 	}
 	private void drawSurface() {
+		Gdx.gl11.glPushMatrix();
 		float[] materialDiffuse = {5.2f, 1.3f, 0.0f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
 		Gdx.gl11.glTranslatef(this.x,this.y,this.z);
 		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+		Gdx.gl11.glPopMatrix();
+
 	}
 	private void drawWalls() {
+		Gdx.gl11.glPushMatrix();
 		Gdx.gl11.glScalef(1f, 0.02f, 1f);
 		Gdx.gl11.glTranslatef(100.0f,75f, 0.0f);
 		Gdx.gl11.glRotatef(90, 0,0, 1);
@@ -34,8 +38,7 @@ public class MazeBase {
 			Gdx.gl11.glTranslatef(0.0f,-100f, -100.0f);
 	        Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		}
-		Gdx.gl11.glScalef(1f, 50f, 1f);
-        
+		Gdx.gl11.glPopMatrix();
 	}
 	public void display() {
 		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
@@ -43,13 +46,13 @@ public class MazeBase {
        this.drawWalls();
 	}
 	public void preventCollision(Camera camera) {
-		if(camera.eye.z <= this.z-100+2)
-		   camera.eye.z = (float) (Math.round(camera.eye.z)+0.5);
-		if(camera.eye.z >= this.z+100-2)
-			camera.eye.z = (float) (Math.round(camera.eye.z)-0.5);
-		if(camera.eye.x <= this.x-100+2)
-			   camera.eye.x = (float) (Math.round(camera.eye.x)+0.5);
-		if(camera.eye.x >= this.x+100-2)
-			camera.eye.x = (float) (Math.round(camera.eye.x)-0.5);
+//		if(camera.eye.z <= this.z-100+2)
+//		   camera.eye.z = (float) (Math.round(camera.eye.z)+0.5);
+//		if(camera.eye.z >= this.z+100-2)
+//			camera.eye.z = (float) (Math.round(camera.eye.z)-0.5);
+//		if(camera.eye.x <= this.x-100+2)
+//			   camera.eye.x = (float) (Math.round(camera.eye.x)+0.5);
+//		if(camera.eye.x >= this.x+100-2)
+//			camera.eye.x = (float) (Math.round(camera.eye.x)-0.5);
 	}
 }

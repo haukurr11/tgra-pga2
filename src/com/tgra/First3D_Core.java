@@ -48,6 +48,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 				-100.5f, -0.5f, 100.5f,
 				100.5f, -0.5f, -100.5f, 
 				100.5f, -0.5f, 100.5f});
+		vertexBuffer.put(new float[] {
+				0f, 0, 0f,  
+				0f, 4f,0f,
+				10.05f, 0,0f,  
+				10.05f, 4f,0f });
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
@@ -106,6 +111,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		float[] lightPosition = {this.wiggleValue, 0.0f, 0.0f, 1.0f};
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition, 0);
 		this.mazebase.display();
+		Wall wall = new Wall();
+		wall.display();
 	}
 
 	@Override
