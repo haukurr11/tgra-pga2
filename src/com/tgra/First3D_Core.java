@@ -1,5 +1,8 @@
 package com.tgra;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.utils.BufferUtils;
@@ -18,9 +21,17 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float count = 0;
 	private float speed = 30.0f;
 	private MazeBase mazebase = null;
-		
+	private List<Wall> walls;
 	@Override
 	public void create() {
+		Random random = new Random();
+        this.walls = new ArrayList<Wall>();
+        for(int i=0;i<20;i++)
+        	for(int j=0;j<20;j++)
+        	{
+        		int rand = random.nextInt();
+                this.walls.add(new Wall(i,j,rand % 2==0));
+        	}
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -75,7 +86,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		this.mazebase.preventCollision(this.cam);
 
 		float deltaTime = Gdx.graphics.getDeltaTime();
-		System.out.println(cam.eye.x + " " + cam.eye.y + " " + cam.eye.z);
+		//System.out.println(cam.eye.x + " " + cam.eye.y + " " + cam.eye.z);
 
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			cam.yaw(-90.0f * deltaTime);
@@ -100,6 +111,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.F)) 
 			cam.slide(0.0f, -this.speed * deltaTime, 0.0f);
 		this.mazebase.preventCollision(this.cam);
+		for(Wall wall: this.walls)
+		   wall.preventCollision(this.cam);
+		
 
 	}
 	
@@ -111,14 +125,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		float[] lightPosition = {this.wiggleValue, 0.0f, 0.0f, 1.0f};
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition, 0);
 		this.mazebase.display();
-		Wall wall = new Wall();
-		
-		for(int i=0;i<20;i++) {
-		 for(int j=0;j<20;j++) {
-		 wall.display(i,j,false);
-		 wall.display(i,j,true);
-		 }
-		}
+		for(Wall wall: this.walls)
+		    wall.display();
 		
 	}
 

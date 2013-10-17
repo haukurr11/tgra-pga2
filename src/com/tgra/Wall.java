@@ -4,10 +4,56 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
 
 public class Wall {
-	float x;
-	float y;
-	float z;
-	public Wall() {
+    private int row;
+    private int column;
+    private boolean front;
+    
+	public Wall(int row, int column, boolean front) {
+		this.row = row;
+		this.column = column;
+		this.front = front;
+	}
+	public int rowcol(float z) {
+		return (int)(((z + 100)/200)*20);
+	}
+	public void preventCollision(Camera camera) {
+		
+		int camera_col = rowcol(camera.eye.z);
+		int camera_row = rowcol(camera.eye.x);
+
+		if(this.front) {
+		//FRONT APPROACH
+		int lowZLimit = -100 + this.row*10;
+		int highZLimit = lowZLimit + 10;
+		int XLimit = -100 + (this.column+1)*10;
+
+			if( (Math.ceil(camera.eye.x) == XLimit+1 || Math.ceil(camera.eye.x) == XLimit-1)
+					&& Math.ceil(camera.eye.z) <= highZLimit 
+					&& Math.ceil(camera.eye.z) >= lowZLimit) {
+			   if(camera_row == this.column)
+			    camera.eye.x -= 1;
+			   else
+				camera.eye.x += 1;
+			}		
+		}
+		else {
+			int lowXLimit = -100 + (this.row) * 10;
+			int highXLimit = lowXLimit +10;
+			int ZLimit = -100 + ((this.column)*10) + 10;
+			System.out.println(ZLimit + " " + camera.eye.z);
+			if( (Math.ceil(camera.eye.z) == ZLimit+1 || Math.ceil(camera.eye.z) == ZLimit-1)
+					&& Math.ceil(camera.eye.x)<= highXLimit 
+					&& Math.ceil(camera.eye.x) >= lowXLimit) {
+			   if(camera_col == this.column)
+			    camera.eye.z -= 1;
+			   else
+				camera.eye.z += 1;
+			}		
+			
+		}
+	}
+	public void display() {
+		this.display(this.row,this.column,this.front);
 	}
 	public void display(int row, int column,boolean across) {
 		if(across) {
