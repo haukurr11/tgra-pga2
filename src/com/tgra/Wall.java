@@ -8,10 +8,15 @@ public class Wall {
     private int column;
     private boolean front;
     
-	public Wall(int row, int column, boolean front) {
+	public Wall(int column, int row, boolean front) {
 		this.row = row;
 		this.column = column;
 		this.front = front;
+		if(this.front) {
+			int temp = this.row;
+			this.row = this.column;
+			this.column = temp;
+		}
 	}
 	public int rowcol(float z) {
 		return (int)(((z + 100)/200)*20);

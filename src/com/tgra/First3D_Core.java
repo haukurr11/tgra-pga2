@@ -26,12 +26,14 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	public void create() {
 		Random random = new Random();
         this.walls = new ArrayList<Wall>();
-        for(int i=0;i<20;i++)
-        	for(int j=0;j<20;j++)
-        	{
-        		int rand = random.nextInt();
-                this.walls.add(new Wall(i,j,rand % 2==0));
-        	}
+		int rand = random.nextInt();
+        this.walls.add(new Wall(0,0,false));
+        this.walls.add(new Wall(0,1,true));
+        this.walls.add(new Wall(0,2,false));
+        this.walls.add(new Wall(0,3,false));
+        this.walls.add(new Wall(0,4,false));
+        this.walls.add(new Wall(1,4,true));
+
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
