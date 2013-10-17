@@ -44,7 +44,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
 		Gdx.gl11.glShadeModel(GL11.GL_SMOOTH);
 
-		//Gdx.gl11.glEnable(GL11.GL_LIGHT1);
 		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
 		
 		Gdx.gl11.glClearColor(0.0f, 0.6f, 1.0f, 1.0f);
@@ -63,9 +62,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 				100f, 0f, 100f});
 		vertexBuffer.put(new float[] {
 				0f, 0, 0f,  
-				0f, 4f,0f,
+				0f, 5f,0f,
 				10.05f, 0,0f,  
-				10.05f, 4f,0f });
+				10.05f, 5f,0f });
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
@@ -136,7 +135,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		this.mazebase.display();
 		for(Wall wall: this.walls)
 		    wall.display();
-		
 	}
 
 	@Override
