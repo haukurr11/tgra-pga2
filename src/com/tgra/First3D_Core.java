@@ -23,11 +23,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float speed = 30.0f;
 	private MazeBase mazebase = null;
 	private List<Wall> walls;
+	private FloatBuffer vertexBuffer;
 	@Override
 	public void create() {
 		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
 
-		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
 		Gdx.gl11.glEnable(GL11.GL_NORMALIZE);
 		Gdx.gl11.glEnable(GL11.GL_SMOOTH);
 		
@@ -42,11 +42,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
             this.walls.add(new Wall(i,19,true));
             Random rand = new Random();
             for(int j=0;j<20;j++)
-            this.walls.add(new Wall(i,j,rand.nextInt() % 2 == 0));
+               this.walls.add(new Wall(i,j,rand.nextInt() % 2 == 0));
             }
-		this.walls.add(new Wall(0,0,true));
-		this.walls.add(new Wall(0,0,false));
-
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -59,7 +56,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
 		
-		Gdx.gl11.glClearColor(0.0f, 0.6f, 1.0f, 1.0f);
+		Gdx.gl11.glClearColor(0.0f, 0.1f, 0.2f, 1.0f);
 
 		Gdx.gl11.glMatrixMode(GL11.GL_PROJECTION);
 		Gdx.gl11.glLoadIdentity();
@@ -67,7 +64,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
-		FloatBuffer vertexBuffer = BufferUtils.newFloatBuffer(72);
+		this.vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {
 				-5, 0f, -5f, 
 				-5f, 0f, 5f,
@@ -82,6 +79,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-95.0f, 2.5f, -95.0f), new Point3D(3.0f, 2.5f, 10.0f), new Vector3D(0.0f, 1.0f, 0.0f));
+		
 	}
 
 	@Override
@@ -97,6 +95,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
+			
+			
 		System.out.println(this.cam.eye.x + "," + this.cam.eye.y + "," + this.cam.eye.z);
 		this.mazebase.preventCollision(this.cam);
 
@@ -140,30 +140,35 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		return (int)(((z + 100)/200)*20);
 	}
 	private void display() {
+
 		cam.setModelViewMatrix();	
 
 		Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 
 
-		
+
 		float[] lightPosition1 = new float[4];
 		lightPosition1 = new float[4];
-		lightPosition1[0] = 0;
-		lightPosition1[1] = 1;
-		lightPosition1[2] = 0;
+		lightPosition1[0] = this.cam.eye.x;
+		lightPosition1[1] = 1f;
+		lightPosition1[2] = this.cam.eye.z;
 		lightPosition1[3] = 1.0f;
-		
+
 		
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition1, 0);
 
 
-		float[] lightDiffuse1 = {0.05f, 0.05f, 0.05f, 0.05f};
+		float[] lightDiffuse1 = {0.05f, 0.05f, 0.05f, 0};
 
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		this.mazebase.display();
+		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse1, 0);
+		
 		Gdx.gl11.glDisable(GL11.GL_COLOR_MATERIAL);
+		this.mazebase.display();
+
 		for(Wall wall: this.walls)
 		    wall.display();
+	
+
 		Gdx.gl11.glEnable(GL11.GL_COLOR_MATERIAL);
 
 	}

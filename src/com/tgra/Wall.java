@@ -90,24 +90,25 @@ public class Wall {
         Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
         tex.bind();  //Gdx.gl11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
         Gdx.gl11.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texCoordBuffer);
+
         if(across) {
             row = 19-row;
         }
         row = -100+10*(row);
         column = -100+10*(column+1);
+        
         if(across) {
             Gdx.gl11.glRotatef(90, 0,1, 0);
         }
         int j = 0;
         Gdx.gl11.glTranslatef(row,0f,column);
-        Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
         float[] materialDiffuse = {255f, 255f, 255f, 0.0f};
         float[] materialDiffuse2 = {6.2f, 0.3f, 7.0f, 0.0f};
         float[] materialDiffuse3 = {9f, 0f, 0f, 0.0f};
         Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
         Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
         Gdx.gl11.glTranslatef(0,0,0.01f);
-        Gdx.gl11.glNormal3f(0.0f, 0f, 1.0f);
+        Gdx.gl11.glNormal3f(0.0f, 1f, 0.0f);
         Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
         j++;
         Gdx.gl11.glDisable(GL11.GL_TEXTURE_2D);
