@@ -1,13 +1,18 @@
 package com.tgra;
 
+import java.nio.FloatBuffer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.BufferUtils;
 
 public class Wall {
     private int row;
     private int column;
     private boolean front;
-    
+    private Texture tex;
+    private FloatBuffer texCoordBuffer;
 	public Wall(int column, int row, boolean front) {
 		this.row = row;
 		this.column = column;
@@ -17,6 +22,15 @@ public class Wall {
 			this.row = this.column;
 			this.column = temp;
 		}
+		tex = new Texture(Gdx.files.internal("assets/textures/grass.png"));
+		texCoordBuffer = BufferUtils.newFloatBuffer(48);
+		texCoordBuffer.put(new float[] {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f});
+		texCoordBuffer.rewind();
 	}
 	public int getColumn() {
 		if(this.front)
@@ -59,7 +73,6 @@ public class Wall {
 			int lowXLimit = -100 + (this.row) * 10;
 			int highXLimit = lowXLimit +10;
 			int ZLimit = -100 + ((this.column)*10) + 10;
-			System.out.println(ZLimit + " " + camera.eye.z);
 			if( (Math.ceil(camera.eye.z) == ZLimit+1 || Math.ceil(camera.eye.z) == ZLimit-1|| Math.ceil(camera.eye.z) == ZLimit)
 					&& Math.ceil(camera.eye.x)<= highXLimit 
 					&& Math.ceil(camera.eye.x) >= lowXLimit) {
@@ -75,6 +88,14 @@ public class Wall {
 		this.display(this.row,this.column,this.front);
 	}
 	public void display(int row, int column,boolean across) {
+//
+//		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
+//		Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+//		
+		tex.bind();  //Gdx.gl11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+
+		Gdx.gl11.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texCoordBuffer);
+		
 		if(across) {
 			row = 19-row;
 		}
@@ -96,19 +117,34 @@ public class Wall {
 				continue;
 		Gdx.gl11.glPushMatrix();
 
+		
 		Gdx.gl11.glTranslatef(i,0f,k);
-
+		Gdx.gl11.glNormal3f(0.0f, 2.0f, -1.0f);
+		
+		
 		float[] materialDiffuse = {0.2f, 7.3f, 7.0f, 0.0f};
 		float[] materialDiffuse2 = {6.2f, 0.3f, 7.0f, 0.0f};
+		float[] materialDiffuse3 = {9f, 0f, 0f, 0.0f};
+		
         if(j % 2 == 0)
-		  Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
+		  Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
         else
-          Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse2, 0);
+          Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse2, 0);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
+        Gdx.gl11.glTranslatef(0,0,0.01f);
+        
+		Gdx.gl11.glNormal3f(0.0f, 1f, 1.0f);
+
+		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
+		
 		Gdx.gl11.glPopMatrix();
 		j++;
 		}
 		}
 		Gdx.gl11.glPopMatrix();
+
+		Gdx.gl11.glDisable(GL11.GL_TEXTURE_2D);
+		Gdx.gl11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
 	}
+	
 }

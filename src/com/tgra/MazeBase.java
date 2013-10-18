@@ -17,10 +17,10 @@ public class MazeBase {
 	}
 	private void drawSurface() {
 		Gdx.gl11.glPushMatrix();
-		float[] materialDiffuse = {5.2f, 1.3f, 0.0f, 0.0f};
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
+		float[] materialDiffuse = {999.2f, 1.3f, 0.0f, 0.0f};
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		Gdx.gl11.glTranslatef(this.x,this.y,this.z);
-		Gdx.gl11.glNormal3f(0.0f, 0.0f, -1.0f);
+		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glPopMatrix();
 
@@ -31,17 +31,20 @@ public class MazeBase {
 		Gdx.gl11.glTranslatef(99.99f,100f, 0.0f);
 		Gdx.gl11.glRotatef(90, 0,0, 1);
 		float[] materialDiffuse = {0.2f, 7.3f, 0.0f, 0.0f};
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_AMBIENT, materialDiffuse, 0);
-		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
+		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		for(int i=0;i<4;i++) {
 			Gdx.gl11.glRotatef(90,1,0, 0);
+			if(i==0 || i==2)
+			Gdx.gl11.glNormal3f(.0f, 01.0f, .0f);
+			if(i==1 || i==3)
+			Gdx.gl11.glNormal3f(.0f, 01.0f, .0f);
 			Gdx.gl11.glTranslatef(0.0f,-100f, -100.0f);
 	        Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		}
 		Gdx.gl11.glPopMatrix();
 	}
 	public void display() {
-		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
        this.drawSurface();
        this.drawWalls();
 	}
