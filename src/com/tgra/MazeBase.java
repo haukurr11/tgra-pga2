@@ -4,58 +4,60 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.BufferUtils;
 
 public class MazeBase {
 	private float x;
 	private float y;
 	private float z;
+	private Texture tex;
+	private FloatBuffer texCoordBuffer;
 	
 	public MazeBase(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	    tex = new Texture(Gdx.files.internal("assets/textures/stone.jpg"));
+        texCoordBuffer = BufferUtils.newFloatBuffer(48);
+        texCoordBuffer.put(new float[] {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f});
+        texCoordBuffer.rewind();
 	}
 	private void drawSurface() {
 		Gdx.gl11.glPushMatrix();
-		float[] materialDiffuse = {999.2f, 1.3f, 0.0f, 0.0f};
+
+        Gdx.gl11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+        Gdx.gl11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+        Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
+        Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+        tex.bind();  //Gdx.gl11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+        Gdx.gl11.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texCoordBuffer);
+
+		float[] materialDiffuse = {255f, 255f, 255.0f, 0.0f};
 		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
-		Gdx.gl11.glTranslatef(this.x,this.y,this.z);
+		for(int j=-95;j<100;j+=10)
+		for(int i=-95;i<100;i+=10) {
+		Gdx.gl11.glPushMatrix();
+		Gdx.gl11.glTranslatef(j,0,i);
 		Gdx.gl11.glNormal3f(0.0f, 1.0f, 0.0f);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		Gdx.gl11.glPopMatrix();
+		}
 
+        Gdx.gl11.glDisable(GL11.GL_TEXTURE_2D);
+        Gdx.gl11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+		Gdx.gl11.glPopMatrix();
 	}
 	private void drawWalls() {
-		Gdx.gl11.glPushMatrix();
-		Gdx.gl11.glScalef(1f, 0.03f, 1f);
-		Gdx.gl11.glTranslatef(99.99f,100f, 0.0f);
-		Gdx.gl11.glRotatef(90, 0,0, 1);
-		float[] materialDiffuse = {0.2f, 7.3f, 0.0f, 0.0f};
-		Gdx.gl11.glNormal3f(0.0f, -1.0f, 0.0f);
-		Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
-		for(int i=0;i<4;i++) {
-			Gdx.gl11.glRotatef(90,1,0, 0);
-			if(i==0 || i==2)
-			Gdx.gl11.glNormal3f(.0f, 01.0f, .0f);
-			if(i==1 || i==3)
-			Gdx.gl11.glNormal3f(.0f, 01.0f, .0f);
-			Gdx.gl11.glTranslatef(0.0f,-100f, -100.0f);
-	        Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
-		}
-		Gdx.gl11.glPopMatrix();
 	}
 	public void display() {
        this.drawSurface();
-       this.drawWalls();
 	}
 	public void preventCollision(Camera camera) {
-		if(camera.eye.z <= this.z-100+2)
-		   camera.eye.z = (float) (Math.round(camera.eye.z)+0.5);
-		if(camera.eye.z >= this.z+100-2)
-			camera.eye.z = (float) (Math.round(camera.eye.z)-0.5);
-		if(camera.eye.x <= this.x-100+2)
-			   camera.eye.x = (float) (Math.round(camera.eye.x)+0.5);
-		if(camera.eye.x >= this.x+100-2)
-			camera.eye.x = (float) (Math.round(camera.eye.x)-0.5);
 	}
 }

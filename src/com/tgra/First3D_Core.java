@@ -25,7 +25,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private List<Wall> walls;
 	@Override
 	public void create() {
-		Gdx.gl11.glEnable(GL11.GL_LIGHT2);
+		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
 
 		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
 		Gdx.gl11.glEnable(GL11.GL_NORMALIZE);
@@ -33,14 +33,19 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		
 
 		
-		Random random = new Random();
         this.walls = new ArrayList<Wall>();
 		for(int i=0;i<20;i++)
-            for(int j=0;j<20;j++)
             {
-                    int rand = random.nextInt();
-            this.walls.add(new Wall(i,j,rand % 2==0));
+            this.walls.add(new Wall(-1,i,false));
+            this.walls.add(new Wall(19,i,false));
+            this.walls.add(new Wall(i,-1,true));
+            this.walls.add(new Wall(i,19,true));
+            Random rand = new Random();
+            for(int j=0;j<20;j++)
+            this.walls.add(new Wall(i,j,rand.nextInt() % 2 == 0));
             }
+		this.walls.add(new Wall(0,0,true));
+		this.walls.add(new Wall(0,0,false));
 
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
@@ -64,15 +69,15 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		FloatBuffer vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {
-				-100f, 0f, -100f, 
-				-100f, 0f, 100f,
-				100f, 0f, -100f, 
-				100f, 0f, 100f});
+				-5, 0f, -5f, 
+				-5f, 0f, 5f,
+				5f, 0f, -5f, 
+				5f, 0f, 5f});
 		vertexBuffer.put(new float[] {
 				0f, 0, 0f,  
 				0f, 5f,0f,
-				10.05f, 0,0f,  
-				10.05f, 5f,0f });
+				10f, 0,0f,  
+				10f, 5f,0f });
 		vertexBuffer.rewind();
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
@@ -139,68 +144,28 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 
-		Gdx.gl11.glEnable(GL11.GL_COLOR_MATERIAL);
 
 		
 		float[] lightPosition1 = new float[4];
 		lightPosition1 = new float[4];
-		lightPosition1[0] = 115;
-		lightPosition1[1] = 60;
-		lightPosition1[2] = 111;
+		lightPosition1[0] = 0;
+		lightPosition1[1] = 1;
+		lightPosition1[2] = 0;
 		lightPosition1[3] = 1.0f;
 		
-		float[] lightPosition2 = new float[4];
-		lightPosition2 = new float[4];
-		lightPosition2[0] = -lightPosition1[0];
-		lightPosition2[1] = 60;
-		lightPosition2[2] = -lightPosition1[2];
-		lightPosition2[3] = 1.0f;
 		
-		float[] lightPosition3 = new float[4];
-		lightPosition3 = new float[4];
-		lightPosition3[0] = -lightPosition1[0];
-		lightPosition3[1] = 60;
-		lightPosition3[2] = lightPosition1[2];
-		lightPosition3[3] = 1.0f;
-		
-		float[] lightPosition4 = new float[4];
-		lightPosition4 = new float[4];
-		lightPosition4[0] = lightPosition1[0];
-		lightPosition4[1] = 60;
-		lightPosition4[2] = -lightPosition1[2];
-		lightPosition4[3] = 1.0f;
-		
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, lightPosition1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT2, GL11.GL_POSITION, lightPosition2, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT3, GL11.GL_POSITION, lightPosition3, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT4, GL11.GL_POSITION, lightPosition4, 0);
+		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition1, 0);
 
 
 		float[] lightDiffuse1 = {0.05f, 0.05f, 0.05f, 0.05f};
 
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_SPECULAR, lightDiffuse1, 0);
-		
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_SPECULAR, lightDiffuse1, 0);
-		
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT2, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT2, GL11.GL_DIFFUSE, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT2, GL11.GL_SPECULAR, lightDiffuse1, 0);
-
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT3, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT3, GL11.GL_DIFFUSE, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT3, GL11.GL_SPECULAR, lightDiffuse1, 0);
-
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT4, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT4, GL11.GL_DIFFUSE, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT4, GL11.GL_SPECULAR, lightDiffuse1, 0);
-
-		Gdx.gl11.glDisable(GL11.GL_COLOR_MATERIAL);
 		this.mazebase.display();
+		Gdx.gl11.glDisable(GL11.GL_COLOR_MATERIAL);
 		for(Wall wall: this.walls)
 		    wall.display();
 		Gdx.gl11.glEnable(GL11.GL_COLOR_MATERIAL);
+
 	}
 
 	@Override
