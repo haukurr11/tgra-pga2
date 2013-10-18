@@ -25,10 +25,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private List<Wall> walls;
 	@Override
 	public void create() {
-		Gdx.gl11.glEnable(GL11.GL_LIGHT1);
 		Gdx.gl11.glEnable(GL11.GL_LIGHT2);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT3);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT4);
 
 		Gdx.gl11.glEnable(GL11.GL_DEPTH_TEST);
 		Gdx.gl11.glEnable(GL11.GL_NORMALIZE);
@@ -185,8 +182,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse1, 0);
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_SPECULAR, lightDiffuse1, 0);
 		
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_AMBIENT, lightDiffuse1, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, lightDiffuse1, 0);
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_SPECULAR, lightDiffuse1, 0);
 		
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT2, GL11.GL_AMBIENT, lightDiffuse1, 0);

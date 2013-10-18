@@ -88,10 +88,13 @@ public class Wall {
 		this.display(this.row,this.column,this.front);
 	}
 	public void display(int row, int column,boolean across) {
-//
-//		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
-//		Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-//		
+		Gdx.gl11.glShadeModel(GL11.GL_SMOOTH);
+
+		Gdx.gl11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		Gdx.gl11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
+		Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+		
 		tex.bind();  //Gdx.gl11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 
 		Gdx.gl11.glTexCoordPointer(2, GL11.GL_FLOAT, 0, texCoordBuffer);
@@ -122,14 +125,11 @@ public class Wall {
 		Gdx.gl11.glNormal3f(0.0f, 2.0f, -1.0f);
 		
 		
-		float[] materialDiffuse = {0.2f, 7.3f, 7.0f, 0.0f};
+		float[] materialDiffuse = {255f, 255f, 255f, 0.0f};
 		float[] materialDiffuse2 = {6.2f, 0.3f, 7.0f, 0.0f};
 		float[] materialDiffuse3 = {9f, 0f, 0f, 0.0f};
 		
-        if(j % 2 == 0)
-		  Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
-        else
-          Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse2, 0);
+          Gdx.gl11.glMaterialfv(GL11.GL_FRONT, GL11.GL_DIFFUSE, materialDiffuse, 0);
 		Gdx.gl11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 4, 4);
         Gdx.gl11.glTranslatef(0,0,0.01f);
         
