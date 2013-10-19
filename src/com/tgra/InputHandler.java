@@ -8,19 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputHandler {
-	
-	private String line = null;
-	private List<String[]> rows;
-	private String[] row;
+	private List<Wall> walls;
 	
 	public InputHandler(String inputFile) {
+		
 		try	{
 			BufferedReader in = new BufferedReader(new FileReader(inputFile));
-			this.rows = new ArrayList<String[]>();
+			this.walls = new ArrayList<Wall>();
 			try {
+				String line;
 				while((line = in.readLine()) != null) {
-					this.row = line.split(",");
-					this.rows.add(row);
+					String[] row = line.split(",");
+					this.walls.add(
+						new Wall(
+								Integer.parseInt(row[0]),
+								Integer.parseInt(row[1]),row[2].equals("1")));
 				}
 			}
 			catch (IOException e) {
@@ -32,7 +34,7 @@ public class InputHandler {
 		} 
 	}
 	
-	public List<String[]> getRowList() {
-		return this.rows;
+	public List<Wall> getWalls() {
+		return this.walls;
 	}
 }

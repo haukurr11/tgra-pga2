@@ -34,7 +34,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glEnable(GL11.GL_SMOOTH);
 		
 
-		this.mazeDesign = new InputHandler("assets/maze.txt");
+		InputHandler inputhandler = new InputHandler("assets/maze.txt");
         this.walls = new ArrayList<Wall>();
 		for(int i=0;i<20;i++)
             {
@@ -43,12 +43,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
             this.walls.add(new Wall(i,-1,true));
             this.walls.add(new Wall(i,19,true));
             }
-		int i = 1;
-		for(String[] row : this.mazeDesign.getRowList()) {
-			System.out.println("'" + row[2] + "'");
-			this.walls.add(new Wall(Integer.parseInt(row[0]), Integer.parseInt(row[1]), row[2].equals("1")));
-			i++;
-		}
+		this.walls.addAll(inputhandler.getWalls());
+
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -167,7 +163,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition1, 0);
 
 
-		float[] lightDiffuse1 = {0.05f, 0.05f, 0.05f, 0};
+		float[] lightDiffuse1 = {0.02f, 0.02f, 0.02f, 0};
 
 		Gdx.gl11.glLightfv(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, lightDiffuse1, 0);
 		

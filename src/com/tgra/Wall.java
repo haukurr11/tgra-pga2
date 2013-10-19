@@ -19,7 +19,7 @@ public class Wall {
             this.row = this.column;
             this.column = temp;
         }
-        tex = new Texture(Gdx.files.internal("assets/textures/grass.png"));
+        tex = new Texture(Gdx.files.internal("assets/textures/hiresgrass.jpg"));
         texCoordBuffer = BufferUtils.newFloatBuffer(48);
         texCoordBuffer.put(new float[] {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
