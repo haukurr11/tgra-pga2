@@ -24,6 +24,8 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private MazeBase mazebase = null;
 	private List<Wall> walls;
 	private FloatBuffer vertexBuffer;
+	private InputHandler mazeDesign;
+	
 	@Override
 	public void create() {
 		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
@@ -32,7 +34,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glEnable(GL11.GL_SMOOTH);
 		
 
-		
+		this.mazeDesign = new InputHandler("assets/maze.txt");
         this.walls = new ArrayList<Wall>();
 		for(int i=0;i<20;i++)
             {
@@ -40,10 +42,13 @@ public class First3D_Core implements ApplicationListener, InputProcessor
             this.walls.add(new Wall(19,i,false));
             this.walls.add(new Wall(i,-1,true));
             this.walls.add(new Wall(i,19,true));
-            Random rand = new Random();
-            for(int j=0;j<20;j++)
-               this.walls.add(new Wall(i,j,rand.nextInt() % 2 == 0));
             }
+		int i = 1;
+		for(String[] row : this.mazeDesign.getRowList()) {
+			System.out.println("'" + row[2] + "'");
+			this.walls.add(new Wall(Integer.parseInt(row[0]), Integer.parseInt(row[1]), row[2].equals("1")));
+			i++;
+		}
 		mazebase = new MazeBase(0,0,0);
 		FloatBuffer mvm = BufferUtils.newFloatBuffer(100);
 		Gdx.gl11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -107,6 +112,10 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			cam.yaw(-90.0f * deltaTime);
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
 			cam.yaw(90.0f * deltaTime);
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
+              cam.pitch(-90.0f * deltaTime);
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
+              cam.pitch(90.0f * deltaTime);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
 		{
