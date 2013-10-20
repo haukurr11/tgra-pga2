@@ -111,11 +111,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 			cam.yaw(-90.0f * deltaTime);
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
 			cam.yaw(90.0f * deltaTime);
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-              cam.pitch(-90.0f * deltaTime);
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-              cam.pitch(90.0f * deltaTime);
-		
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
 		{
 				cam.slide(0.0f, 0.0f, -this.speed * deltaTime);
@@ -129,10 +124,6 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
 			cam.slide(this.speed * deltaTime, 0.0f, 0.0f);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
-			cam.slide(0.0f, this.speed * deltaTime, 0.0f);
-		if(Gdx.input.isKeyPressed(Input.Keys.F)) 
-			cam.slide(0.0f, -this.speed * deltaTime, 0.0f);
 		this.mazebase.preventCollision(this.cam);
 		for(Wall wall: this.walls)
 		{
