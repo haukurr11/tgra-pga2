@@ -53,11 +53,7 @@ public class MazeBase {
         Gdx.gl11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
 		Gdx.gl11.glPopMatrix();
 	}
-	private void drawWalls() {
-	}
 	public void display() {
        this.drawSurface();
-	}
-	public void preventCollision(Camera camera) {
 	}
 }

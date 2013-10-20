@@ -120,7 +120,6 @@ public class MazeGame implements ApplicationListener, InputProcessor
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
 			cam.slide(this.speed * deltaTime, 0.0f, 0.0f);
 		}
-		this.mazebase.preventCollision(this.cam);
 		for(Wall wall: this.walls)
 		{
 			if(Math.abs(rowcol(this.cam.eye.z)-wall.getColumn()) <=1
