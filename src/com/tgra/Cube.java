@@ -11,11 +11,12 @@ public class Cube {
 
 	FloatBuffer vertexBuffer;
 	FloatBuffer texCoordBuffer;
-	
+	FloatBuffer oldbuffer;
 	Texture tex;
 	
-	public Cube(String textureImage)
+	public Cube(String textureImage,FloatBuffer fb)
 	{
+		this.oldbuffer = fb;
 		vertexBuffer = BufferUtils.newFloatBuffer(72);
 		vertexBuffer.put(new float[] {-0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f,
 									  0.5f, -0.5f, -0.5f, 0.5f, 0.5f, -0.5f,
@@ -29,7 +30,6 @@ public class Cube {
 									  0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
 									  -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,
 									  0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f});
-		vertexBuffer.rewind();
 		
 		texCoordBuffer = BufferUtils.newFloatBuffer(48);
 		texCoordBuffer.put(new float[] {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
@@ -38,16 +38,15 @@ public class Cube {
 										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
 										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
 										0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f});
-		texCoordBuffer.rewind();
 		
 		tex = new Texture(Gdx.files.internal("assets/textures/" + textureImage));
 	}
 	
 
 	public void draw()
-	{
+	{ 
 		Gdx.gl11.glShadeModel(GL11.GL_SMOOTH);
-		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
+		Gdx.gl11.glVertexPointer(0, GL11.GL_FLOAT, 0, oldbuffer);
 		
 		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
 		Gdx.gl11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
@@ -71,6 +70,8 @@ public class Cube {
 
 		Gdx.gl11.glDisable(GL11.GL_TEXTURE_2D);
 		Gdx.gl11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, oldbuffer);
+
 		
 	}
 }

@@ -14,7 +14,6 @@ import com.badlogic.gdx.InputProcessor;
 
 public class First3D_Core implements ApplicationListener, InputProcessor
 {
-	
 	Camera cam;
 	private boolean ligthBulbState = true;
 	private boolean wiggleLights = false;
@@ -23,8 +22,11 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 	private float speed = 30.0f;
 	private MazeBase mazebase = null;
 	private List<Wall> walls;
+	private List<Spongebob> spongebobs;
+
 	private FloatBuffer vertexBuffer;
 	private InputHandler mazeDesign;
+	private Spongebob human;
 	
 	@Override
 	public void create() {
@@ -34,8 +36,9 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 		Gdx.gl11.glEnable(GL11.GL_SMOOTH);
 		
 
+		this.walls = new ArrayList<Wall>();
 		InputHandler inputhandler = new InputHandler("assets/maze.txt");
-        this.walls = new ArrayList<Wall>();
+        //this.walls = new ArrayList<Wall>();
 		for(int i=0;i<20;i++)
             {
             this.walls.add(new Wall(-1,i,false));
@@ -80,7 +83,7 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
 		cam = new Camera(new Point3D(-95.0f, 2.5f, -95.0f), new Point3D(3.0f, 2.5f, 10.0f), new Vector3D(0.0f, 1.0f, 0.0f));
-		
+        this.spongebobs = inputhandler.getSpongebobs();
 	}
 
 	@Override
@@ -172,9 +175,18 @@ public class First3D_Core implements ApplicationListener, InputProcessor
 
 		for(Wall wall: this.walls)
 		    wall.display();
-	
-
 		Gdx.gl11.glEnable(GL11.GL_COLOR_MATERIAL);
+
+		Gdx.gl11.glPushMatrix();
+		Gdx.gl11.glTranslatef(1.0f, 1.0f, 1.0f);
+		Gdx.gl11.glRotatef(90, 0.0f, 1.0f, 0.0f);
+		
+		Gdx.gl11.glEnable(GL11.GL_COLOR_MATERIAL);
+
+		for(Spongebob s : this.spongebobs)
+			s.display();
+		
+		Gdx.gl11.glPopMatrix();
 
 	}
 
