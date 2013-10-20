@@ -19,7 +19,7 @@ public class MazeGame implements ApplicationListener, InputProcessor
 	private boolean wiggleLights = false;
 	private float wiggleValue = 1f;
 	private float count = 0;
-	private float speed = 30.0f;
+	private float speed = 15.0f;
 	private MazeBase mazebase = null;
 	private List<Wall> walls;
 	private List<Spongebob> spongebobs;
@@ -99,11 +99,7 @@ public class MazeGame implements ApplicationListener, InputProcessor
 	}
 	
 	private void update() {
-			
-			
-		System.out.println(this.cam.eye.x + "," + this.cam.eye.y + "," + this.cam.eye.z);
-		this.mazebase.preventCollision(this.cam);
-
+		
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		//System.out.println(cam.eye.x + " " + cam.eye.y + " " + cam.eye.z);
 
